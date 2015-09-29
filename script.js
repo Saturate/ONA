@@ -7,11 +7,10 @@ function ONAGraph() {
     oneNameIndex: 54
 	};
 
-    $('#show').on('click', this.renderGraph.bind(this));
-    $('#showOneName').on('change', this.changeOneSettings.bind(this));
+  $('#show').on('click', this.renderGraph.bind(this));
+  $('#showOneName').on('change', this.changeOneSettings.bind(this));
 
-
-    this.renderGraph();
+  this.renderGraph();
 };
 
 ONAGraph.prototype.changeOneSettings = function(e) {
@@ -33,7 +32,7 @@ ONAGraph.prototype.renderGraph = function() {
     var force = d3.layout.force()
         .charge(this.settings.charge)
         .linkDistance(this.settings.linkDistance)
-        .linkStrength(0.2)
+        .linkStrength(0.3)
         .size([width, height]);
 
 /*
