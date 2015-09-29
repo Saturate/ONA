@@ -9,7 +9,7 @@ var XLSX = require('XLSX');
 var argv = require('minimist')(process.argv.slice(2));
 console.dir(argv);
 
-function rowCellsToArray(row, start, end) {
+function generateDataSet(row, rowArray, start, end) {
 	var array = [];
 
 	for (var i = start; i < end; i++) {
@@ -18,7 +18,11 @@ function rowCellsToArray(row, start, end) {
 			array.push(row[i]);
 		}
 	}
-	return array;
+	return {
+		name: rowArray[1][start],
+		description: rowArray[0][start],
+		data: array
+	};
 }
 
 
@@ -82,19 +86,11 @@ fs.readFile(path.resolve(dataFile), function(err, body) {
 			name: row[6],
 			group: row[8],
 			answers: [
-				{
-					name: rowArray[1][9],
-					description: rowArray[0][9],
-					data: rowCellsToArray(row, 9, 18)
-				},
-				{
-					name: rowArray[1][19],
-					description: rowArray[0][19],
-					data: rowCellsToArray(row, 19, 29)
-				}
-				//rowCellsToArray(row, 9, 18),
-				//rowCellsToArray(row, 19, 29),
-				//rowCellsToArray(row, 30, 40)
+				generateDataSet(row, rowArray, 9, 18),
+				generateDataSet(row, rowArray, 19, 29),
+				generateDataSet(row, rowArray, 30, 40),
+				generateDataSet(row, rowArray, 41, 51),
+				generateDataSet(row, rowArray, 52, 62)
 			]
 		};
 

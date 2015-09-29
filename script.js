@@ -28,12 +28,7 @@ ONAGraph.prototype.renderGraph = function() {
 
     var color = d3.scale.category20();
 
-
-
-      function zoom() {
-        svg.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
-      }
-
+    var zoome = d3.behavior.zoom().scaleExtent([1, 8]).on("zoom", zoom)
 
     var force = d3.layout.force()
         .charge(this.settings.charge)
@@ -41,10 +36,29 @@ ONAGraph.prototype.renderGraph = function() {
         .linkStrength(0.2)
         .size([width, height]);
 
+/*
+        // init svg
+        var outer = d3.select("#ona").append("svg")
+    .attr("width", width)
+    .attr("height", height)
+    .attr("pointer-events", "all");
+
+var svg  = outer
+  .append('svg:g')
+    .call(d3.behavior.zoom().on("zoom", zoom))
+    .on("dblclick.zoom", null)
+
+*/
+
     var svg = d3.select("#ona").append("svg")
         .attr("width", width)
         .attr("height", height)
-        .call(d3.behavior.zoom().scaleExtent([1, 8]).on("zoom", zoom));
+        .call(zoome);
+
+    function zoom() {
+      console.log('zooooom', svg[0][0]);
+      svg.attr("transform", "translate(" + d3.event.translate + ") scale(" + d3.event.scale + ")");
+    }
 
     svg.append("svg:defs").selectAll("marker")
         .data(["end"])      // Different link/path types can be defined here
