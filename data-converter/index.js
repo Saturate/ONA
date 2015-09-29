@@ -46,7 +46,7 @@ function getIdFromName(users, username) {
 	return user[0].index;
 }
 
-var dataFile = "C:/Users/akj/Dropbox/ONA/Vaskede data fra SurveyMonkey.xls";
+var dataFile = "C:/Users/Allan/Dropbox/ONA/Vaskede data fra SurveyMonkey.xls";
 //var dataFile = './sample-data/sample-data-from-surveymoney.xls';
 
 fs.readFile(path.resolve(dataFile), function(err, body) {
@@ -69,7 +69,7 @@ fs.readFile(path.resolve(dataFile), function(err, body) {
 	var users = [];
 	var indexUsers = 0;
 
-	data[0].sheet.forEach(function(row, index) {
+	data[0].sheet.forEach(function(row, index, rowArray) {
 
 		// These are the two "meta"-rows, we don't want to process them right now.
 		// Later on we want to use these for generating the data-set names.
@@ -82,7 +82,19 @@ fs.readFile(path.resolve(dataFile), function(err, body) {
 			name: row[6],
 			group: row[8],
 			answers: [
-				rowCellsToArray(row, 9, 18)
+				{
+					name: rowArray[1][9],
+					description: rowArray[0][9],
+					data: rowCellsToArray(row, 9, 18)
+				},
+				{
+					name: rowArray[1][19],
+					description: rowArray[0][19],
+					data: rowCellsToArray(row, 19, 29)
+				}
+				//rowCellsToArray(row, 9, 18),
+				//rowCellsToArray(row, 19, 29),
+				//rowCellsToArray(row, 30, 40)
 			]
 		};
 
@@ -91,7 +103,7 @@ fs.readFile(path.resolve(dataFile), function(err, body) {
 			return;
 		}
 
-		console.log('############################');
+		console.log('#############' + rowArray[1][9] + '###############');
 		console.log(user.name + ' from ' + user.group + ' picked: ' + user.answers);
 		console.log(JSON.stringify(user));
 
@@ -102,25 +114,26 @@ fs.readFile(path.resolve(dataFile), function(err, body) {
 
  	var links = [];
 	users.forEach(function(user) {
-		user.answers[0].forEach(function(answer) {
+		console.log('### Creating links for %s ----- %s', user.answers[0].name , user.answers[0].description);
+		user.answers[0].data.forEach(function(answer, index, sourceArray) {
 
 			if(answer == undefined) {
 				return false;
 			}
-
-			console.log('LINK: %s   (%s)  ->  %s (%s)', user.name, user.index, answer, getIdFromName(users, answer));
 
 			var link = {
 				"source": user.index,
 				"target": getIdFromName(users, answer)
 			};
 
-			links.push(link);
+			console.log('LINK: %s   (%s)  ->  %s (%s)', user.name, user.index, answer, link.target);
+
+			if(link.target) {
+				links.push(link);
+			}
 
 		});
 	});
-
-	console.log(links);
 
 	var graphData = {
 	  "nodes": users,
