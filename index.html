@@ -1,0 +1,54 @@
+<html>
+  <head>
+    <title>ONA Test</title>
+
+
+    <style>
+      body {
+          font-family: "Helvetica", "Arial", "FreeSans", "Verdana", "Tahoma", "Lucida Sans", "Lucida Sans Unicode", "Luxi Sans", sans-serif;
+      }
+      .node {
+        stroke-width: 1.5px;
+      }
+      .link {
+        stroke: #999;
+        stroke-opacity: .6;
+      }
+      .node text {
+        pointer-events: none;
+        font: 12px sans-serif;
+        color: #000;
+        fill: #000000;
+      }
+      #settings {
+        background: #F1F1F1;
+        padding: 10px;
+      }
+      #settings h1 {
+        font-size: 18px;
+        margin: 0;
+      }
+
+    </style>
+  </head>
+  <body>
+
+    <div id="settings">
+        <h1>Settings</h1>
+        Force-directed graph drawing for ONA.
+    <br>
+        Show all names: <input type="checkbox"/> <br>
+        Show one name: <select id="showOneName">
+            <option>Select coworker</option>
+        </select>
+        <br>
+        <button id="show">Show</button>
+    </div>
+
+    <div id="ona"></div>
+
+    <script src="http://d3js.org/d3.v3.js"></script>
+    <script src="https://code.jquery.com/jquery-2.1.4.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
