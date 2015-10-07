@@ -50,8 +50,8 @@ function getIdFromName(users, username) {
 	return user[0].index;
 }
 
-var dataFile = "C:/Users/Allan/Dropbox/ONA/Vaskede data fra SurveyMonkey.xls";
-//var dataFile = './sample-data/sample-data-from-surveymoney.xls';
+var dataFile = "C:/Users/"+ process.env['USERPROFILE'].split(path.sep)[2] +  "/Dropbox/ONA/Vaskede data fra SurveyMonkey.xls";
+var dataFile = './sample-data/sample-data-from-surveymoney.xls';
 
 fs.readFile(path.resolve(dataFile), function(err, body) {
 	if (err) {
