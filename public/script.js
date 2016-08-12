@@ -73,7 +73,7 @@ var svg  = outer
         .attr("d", "M0,-5L10,0L0,5");
 
 
-    d3.json("sample-data/sample-data-from-surveymoney.json", function(error, graph) {
+    d3.json("data/d3-test.json", function(error, graph) {
   if (error) throw error;
 
     force.nodes(graph.nodes)
