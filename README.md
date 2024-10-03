@@ -1,4 +1,4 @@
-# ONA9
+# ONA
 Organizational Network Analysis Tools In JavaScript.
 
 
